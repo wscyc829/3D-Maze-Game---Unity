@@ -11,15 +11,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public ThirdPersonCharacter character { get; private set; } // the character we are controlling
         public Transform target;                                    // target to aim for
 
-		public float search_distance;
-
         private void Start()
         {
             // get the components on the object we need ( should not be null due to require component so no need to check )
             agent = GetComponentInChildren<NavMeshAgent>();
             character = GetComponent<ThirdPersonCharacter>();
 
-	        agent.updateRotation = false;
+	     	agent.updateRotation = false;
 	        agent.updatePosition = true;
         }
 
@@ -29,7 +27,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (target != null)
                 agent.SetDestination(target.position);
 
-			if (agent.remainingDistance < search_distance && agent.remainingDistance > agent.stoppingDistance) {
+			if (agent.remainingDistance > agent.stoppingDistance) {
 				character.Move (agent.desiredVelocity, false, false);
 			} else {
 				character.Move(Vector3.zero, false, false);

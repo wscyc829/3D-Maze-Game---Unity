@@ -24,7 +24,7 @@ public class Maze : MonoBehaviour {
 			y = 0;
 		}  
 	}  
-
+		
 	//for closed grid
 	public GameObject wall;
 	public float wall_lenght;
@@ -71,8 +71,7 @@ public class Maze : MonoBehaviour {
 		CreateMaze ();
 		StartCoroutine(SpawnEnemies ());
 
-		PutStartPoint ();
-		PutGoalPoint ();
+		PutStartAndEndPoint ();
 	}
 
 	void CreateBoard (){
@@ -273,19 +272,26 @@ public class Maze : MonoBehaviour {
 		}
 	}
 
-	void PutStartPoint(){
+	void PutStartAndEndPoint(){
 		int r = Random.Range(0, cells.Length);
 		Cell c = cells [r];
 
 		GameObject instance = Instantiate (start, new Vector3 (c.x, 2, c.y), start.transform.rotation) as GameObject;
 
 		player.transform.position = instance.transform.position;
+
+
+		int r1;
+		do {
+			r1 = Random.Range(0, cells.Length);
+
+			if (r != r1) {
+				
+				Cell c1 = cells [r1];
+
+				Instantiate (goal, new Vector3 (c1.x, 2, c1.y), goal.transform.rotation);
+			}
+		} while(r == r1);
 	}
 
-	void PutGoalPoint(){
-		int r = Random.Range(0, cells.Length);
-		Cell c = cells [r];
-
-		GameObject instance = Instantiate (goal, new Vector3 (c.x, 2, c.y), start.transform.rotation) as GameObject;
-	}
 }

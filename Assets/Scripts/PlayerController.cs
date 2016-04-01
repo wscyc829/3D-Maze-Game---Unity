@@ -2,21 +2,23 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+	public float falling_distance;
 
 	void Update(){
-		
-	}
-	void OnCollisionEnter(Collision collision){
-		if (collision.gameObject.CompareTag ("PickUp")) {
-			Destroy (collision.gameObject);
+		if(transform.position.y < falling_distance){
+			GameController.instance.GameOver ();
 		}
 	}
 
-	void LoseHP(int lose){
-	
+	void OnCollisionEnter(Collision collision){
+		if (collision.gameObject.CompareTag ("Enemy")) {
+			GameController.instance.GameOver ();
+		}
 	}
 
-	void DoBlinking(){
-		
+	void OnTriggerEnter(Collider other){
+		if(other.gameObject.CompareTag ("Goal")){
+			GameController.instance.GameWin ();
+		}
 	}
 }

@@ -4,11 +4,12 @@ using System.Collections;
 public class BulletController : MonoBehaviour {
 	public int damage;
 	public float speed;
+	public float destroy_time;
 
 	private Rigidbody rb;
 
 	void Start () {
-		
+		Invoke ("DestroyByTime", destroy_time);
 	}
 
 	void Update(){
@@ -19,12 +20,14 @@ public class BulletController : MonoBehaviour {
 				if (hit [i].transform.CompareTag ("Enemy")) {
 					EnemyController ec = hit [i].transform.GetComponent<EnemyController> ();
 					ec.LoseHP (damage);
-				} else {
-					
+					Destroy (gameObject);
 				}
-
-				Destroy (gameObject);
 			}
 		}
 	}
+
+	void DestroyByTime(){
+		Destroy (gameObject);
+	}
+
 }
